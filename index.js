@@ -3,7 +3,7 @@
 const bodyParser = require('body-parser');
 const browserify = require('browserify-middleware');
 const express = require('express');
-const { readdirSync, statSync } = require('fs');
+const { readdirSync, statSync, createReadStream } = require('fs');
 const { join } = require('path');
 
 const { mount } = require('./lib/server/rest/connectionsapi');
@@ -34,6 +34,12 @@ function setupExample(example) {
 
   return connectionManager;
 }
+
+app.get(`/input.wav`, (req, res) => {
+  // send stream
+  const fileStream = createReadStream('input.wav');
+  fileStream.pipe(res);
+});
 
 app.get('/', (req, res) => res.redirect(`${examples[0]}/index.html`));
 

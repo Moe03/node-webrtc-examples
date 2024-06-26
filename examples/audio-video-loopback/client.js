@@ -5,17 +5,17 @@ const createExample = require('../../lib/browser/example');
 const description = 'This example simply relays incoming audio and video using \
 RTCRtpTransceivers.';
 
-const localVideo = document.createElement('video');
+const localVideo = document.createElement('audio');
 localVideo.autoplay = true;
 localVideo.muted = true;
 
-const remoteVideo = document.createElement('video');
+const remoteVideo = document.createElement('audio');
 remoteVideo.autoplay = true;
 
 async function beforeAnswer(peerConnection) {
   const localStream = await window.navigator.mediaDevices.getUserMedia({
     audio: true,
-    video: true
+    // video: true
   });
 
   localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
